@@ -19,10 +19,10 @@
 	\section{Task 1 --- Traffic Light}
 	\begin{figure}[!h]
 		\centering
-		\begin{tikzpicture}[text width=1.1cm, text centered]
-			\node[state] (1) {Red};
-			\node[state] (2) [below left of =1]{Amber};
-			\node[state] (3) [below right of =1]{Green};
+		\begin{tikzpicture}
+			\node[state, text width = 1.1cm, text centered] (1) {Red};
+			\node[state,  text width = 1.1cm, text centered] (2) [below left of =1]{Amber};
+			\node[state,  text width = 1.1cm, text centered] (3) [below right of =1]{Green};
 
 			\draw (1) edge[above left] node{$\Delta t > 45$} (2)
 				  (1) edge[loop above] node{$\Delta t \leq 45$} (1)
