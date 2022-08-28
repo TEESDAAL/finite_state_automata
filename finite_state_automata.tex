@@ -40,7 +40,7 @@
 		\begin{tikzpicture}[text width=1.2cm, text centered]
 			\node[state, initial] (s) {Start};
 			\node[state, accepting] (z) [right of=s] {Zero};
-			\node[state] (f) [above of=z] {failed};
+			\node[state] (f) [above of=z] {Failed};
 			\node[state, accepting] (di) [below of =z] {Integer};
 			\node[state] (dp) [right of =z] {Decimal point};
 			\node[state, accepting] (fl) [right of=dp] {Floating point};
