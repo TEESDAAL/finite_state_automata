@@ -57,7 +57,7 @@
 				  (fl) edge[bend right, above right] node{D.P} (f)
 				  (fl) edge[loop right] node{0-9} (fl);
 		\end{tikzpicture}
-		\caption{A finite state machine that parses a number from a string one character at a time. The state machine ends when the final character is reached. The parse is considered a success if the ending position is on an accepting node. Any undefined behaviour, such as encountering a character not in \{`1', `2', `3', `4', `5', `6', `7', `8', `9',`.'\}, is automatically assumed to be a fail.}
+		\caption{A finite state machine that parses a number from a string one character at a time. The state machine ends when the final character is reached. The parse is considered a success if the ending position is on an accepting node. Any undefined behaviour, such as encountering a character not in \{`0', `1', `2', `3', `4', `5', `6', `7', `8', `9',`.'\}, is automatically assumed to be a fail.}
 	\end{figure}
 
 \end{document}

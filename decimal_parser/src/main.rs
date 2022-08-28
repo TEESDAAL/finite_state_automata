@@ -1,6 +1,7 @@
 pub mod lib;
 use crate::lib::*;
 use std::io;
+
 fn main() {
     loop {
         println!("Please input a number to parse:");

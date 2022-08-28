@@ -24,7 +24,7 @@ pub enum DecimalParser {
 }
 
 impl DecimalParser {
-    pub fn new() -> DecimalParser {
+    pub fn new() -> Self {
         DecimalParser::Start
     }
     pub fn progress_parse(&mut self, next_char: NextChar) {
@@ -32,20 +32,20 @@ impl DecimalParser {
             Self::Start => match next_char {
                 NextChar::Digit('0') => Self::Zero,
                 NextChar::Digit(_) => Self::Integer,
-                _ => Self::Failed,
+                NextChar::Invalid | NextChar::DecimalPoint => Self::Failed,
             },
             Self::Zero => match next_char {
                 NextChar::DecimalPoint => Self::DecimalPoint,
-                _ => Self::Failed,
+                NextChar::Invalid | NextChar::Digit(_) => Self::Failed,
             },
             Self::Integer => match next_char {
                 NextChar::DecimalPoint => Self::DecimalPoint,
                 NextChar::Digit(_) => Self::Integer,
-                _ => Self::Failed,
+                NextChar::Invalid => Self::Failed,
             },
             Self::DecimalPoint | Self::FloatingPoint => match next_char {
                 NextChar::Digit(_) => Self::FloatingPoint,
-                _ => Self::Failed,
+                NextChar::DecimalPoint | NextChar::Invalid => Self::Failed,
             },
             Self::Failed => Self::Failed,
         }
