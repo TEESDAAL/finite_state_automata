@@ -1,5 +1,5 @@
 enum NextChar {
-    Digit(u8),
+    Digit(char),
     DecimalPoint,
     Invalid,
 }
@@ -7,7 +7,7 @@ enum NextChar {
 impl NextChar {
     fn from(c: char) -> Self {
         match c {
-            '0'..='9' => NextChar::Digit(c as u8 - '0' as u8),
+            '0'..='9' => NextChar::Digit(c),
             '.' => NextChar::DecimalPoint,
             _ => NextChar::Invalid,
         }
@@ -30,7 +30,7 @@ impl DecimalParser {
     fn progress_parse(&mut self, next_char: NextChar) {
         *self = match self {
             Self::Start => match next_char {
-                NextChar::Digit(0) => Self::Zero,
+                NextChar::Digit('0') => Self::Zero,
                 NextChar::Digit(_) => Self::Integer,
                 _ => Self::Failed,
             },
