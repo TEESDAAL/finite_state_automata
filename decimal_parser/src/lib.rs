@@ -15,7 +15,7 @@ impl NextChar {
 }
 
 pub enum DecimalParser {
-    Start,
+    EmptyValue,
     Zero,
     Integer,
     DecimalPoint,
@@ -25,11 +25,11 @@ pub enum DecimalParser {
 
 impl DecimalParser {
     pub fn new() -> Self {
-        DecimalParser::Start
+        DecimalParser::EmptyValue
     }
     pub fn progress_parse(&mut self, next_char: NextChar) {
         *self = match self {
-            Self::Start => match next_char {
+            Self::EmptyValue => match next_char {
                 NextChar::Digit('0') => Self::Zero,
                 NextChar::Digit(_) => Self::Integer,
                 NextChar::Invalid | NextChar::DecimalPoint => Self::Failed,
@@ -51,7 +51,7 @@ impl DecimalParser {
         }
     }
     pub fn fully_parse(&mut self, input: String) {
-        for c in input.chars().collect::<Vec<char>>() {
+        for c in input.chars() {
             self.progress_parse(NextChar::from(c));
         }
     }

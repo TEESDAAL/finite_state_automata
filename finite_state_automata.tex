@@ -1,5 +1,6 @@
-\documentclass{article}
+\documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc}
+\usepackage{a4wide}
 \usepackage{tikz}
 \usetikzlibrary{automata, positioning, arrows}
 \title{An Exploration of Finite State Automata}
@@ -38,7 +39,7 @@
 	\begin{figure}[!h]
 		\centering
 		\begin{tikzpicture}[text width=1.2cm, text centered]
-			\node[state, initial] (s) {Start};
+			\node[state, initial] (s) {Empty Value};
 			\node[state, accepting] (z) [right of=s] {Zero};
 			\node[state] (f) [above of=z] {Failed};
 			\node[state, accepting] (di) [below of =z] {Integer};
