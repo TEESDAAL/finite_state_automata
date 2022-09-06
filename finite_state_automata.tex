@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{a4wide}
 \usepackage{tikz}
+\usepackage{pgffor}
+\usepackage[shortlabels]{enumitem}
 \usetikzlibrary{automata, positioning, arrows}
 \title{An Exploration of Finite State Automata}
 \author{Alan Teesdale}
@@ -17,7 +19,7 @@
 
 	\maketitle
 
-	\section{Task 1 --- Traffic Light}
+	\section{Traffic Light}
 	\begin{figure}[!h]
 		\centering
 		\begin{tikzpicture}
@@ -35,7 +37,7 @@
 		\caption{Graph showing the finite state automata where $\Delta t$ represents the number of ticks, or seconds, since the last state change.}
 	\end{figure}
     \pagebreak
-	\section{Task 2 --- Decimal Parser}
+	\section{Decimal Parser}
 	\begin{figure}[!h]
 		\centering
 		\begin{tikzpicture}[text width=1.2cm, text centered]
@@ -50,7 +52,7 @@
 				  (s) edge[above left] node{D.P} (f)
 				  (s) edge[below left] node{1-9} (di)
 				  (di) edge[loop below] node{0-9} (di)
-				  (z) edge[above right] node{0-9} (f)
+				  (z) edge[right] node{0-9} (f)
 				  (z) edge[above] node{D.P} (dp)
 				  (di) edge[below right] node{D.P} (dp)
 				  (dp) edge[above right] node{D.P} (f)
@@ -60,6 +62,40 @@
 		\end{tikzpicture}
 		\caption{A finite state machine that parses a number from a string one character at a time. The state machine ends when the final character is reached. The parse is considered a success if the ending position is on an accepting node. Any undefined behaviour, such as encountering a character not in \{`0', `1', `2', `3', `4', `5', `6', `7', `8', `9',`.'\}, is automatically assumed to be a fail.}
 	\end{figure}
+	\section{Letters to Digits and vice versa converter}
+	\begin{tabular}{p{0.5\textwidth} | p{0.5\textwidth}}
+	\subsection{Rules}
+	\begin{enumerate}[start=0,label={\bfseries R$_{\arabic*}$:}]
+		\item S $\rightarrow$ STRING
+		\item STRING $\rightarrow$ DIGIT STRING
+		\item STRING $\rightarrow$ LETTER STRING
+		\item STRING $\rightarrow$ DIGIT
+		\item STRING $\rightarrow$ LETTER
+		\item DIGIT $\rightarrow$ LETTER
+		\item LETTER $\rightarrow$ DIGIT
+		\foreach \n in {0,...,9}{\item DIGIT $\rightarrow$ \n}
+		\foreach \n in {A, B, C, D, E, F, G, H, I, J}{\item LETTER $\rightarrow$ \n}
+	\end{enumerate} &
+	\subsection{Terminal Symbols}
+	$\Sigma$ = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 0, A, B, C, D, E, F, G, H, I, J\}
+	\subsection{Non-terminal Symbols}
+	$N$ = \{STRING, DIGIT, LETTER\}
+	\subsection{Finite State Machine}
+
+		\begin{tikzpicture}
+			\node[state, initial above] (s) {Start};
+			\node[state, accepting] (d) [below left of=s] {Digit};
+			\node[state, accepting] (l) [below right of=s] {Letter};
+
+			\draw (s) edge[above left] node{0-9} (d)
+				  (s) edge[above right] node{A-J} (l)
+				  (d) edge[bend left=20, above] node{A-J} (l)
+				  (l) edge[bend left=20, below] node{0-9} (d)
+				  (d) edge[loop left] node{0-9} (d)
+				  (l) edge[loop right] node{A-J} (l);
+
+		\end{tikzpicture}
+\end{tabular}
 
 \end{document}
 
